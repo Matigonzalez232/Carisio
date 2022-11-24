@@ -21,8 +21,23 @@ const displayHotelList = () => {
     document.getElementById("hotel__names").innetHTML = hotelHTML
 }
 
-const createMarker = (coord, name) => {
-    let html = `<h3>${name}</h3> `
+const createMarker = (coord, name, address, phone) => {
+    let html =
+        `
+    <div class="window">
+        <h2>${name}</h2>
+        <div class="address">
+        <i class="fas fa-map-marker-alt fa-lg" ><i>
+        <h3>${address}</h3>
+        </div>
+        <div class="address">
+        <i class="fas fa-phone-alt fa-lg" ><i>
+        <h3>${phone}</h3>
+        </div>
+    
+    </div>
+    
+    `
     const marker = new google.maps.marker(
         {
             position: coord,
@@ -44,7 +59,8 @@ const createLocationMarkers = () => {
     hotels.forEach(hotel => {
         let coord = new google.maLatLng(hotel.lat, hotel.lng);
         let name = hotel.name;
-        createMarkers(coord, name);
+        bounds.extend(coord),
+            createMarkers(coord, name, phone);
         map.fitBounds(bounds);
     })
 }
@@ -53,7 +69,8 @@ function initmap() {
     let barcerlona = { lat: 41.390205, lng: 2.154007 }
     map = new google.maps.Map(document.getElementById("map"), {
         center: barcerlona,
-        zoom: 14
+        zoom: 14,
+        // mapId: idDeEstilos
     })
 
     // console.log(hotels)
