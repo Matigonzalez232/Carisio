@@ -1,7 +1,8 @@
+//la variable hotels esta definida en global scope por eso podemos acceder a ella desde cualquier parte
 let map;
 let markers = [];
 const setListener = () => {
-    document.querySelector(".hotel__individualNames").forEach((hotelName, index) => {
+    document.querySelectorAll(".hotel__individualNames").forEach((hotelName, index) => {
 
         hotelName.addEventListener("click", () => {
 
@@ -15,7 +16,7 @@ const setListener = () => {
 const displayHotelList = () => {
     let hotelHTML = "";
     hotels.forEach(hotel => {
-        hotelHTML += ` <h4 class="hotel__individualNames">${hotel.name}</h4>`
+        hotelHTML += `<h4 class="hotel__individualNames">${hotel.name}</h4>`
 
     })
     document.getElementById("hotel__names").innetHTML = hotelHTML
@@ -59,24 +60,24 @@ const createLocationMarkers = () => {
     hotels.forEach(hotel => {
         let coord = new google.maLatLng(hotel.lat, hotel.lng);
         let name = hotel.name;
-        bounds.extend(coord),
-            createMarkers(coord, name, phone);
+        bounds.extend(coord)
+        createMarker(coord, name, address, phone);
         map.fitBounds(bounds);
     })
 }
 
 function initmap() {
-    let barcerlona = { lat: 41.390205, lng: 2.154007 }
+    let barcelona = { lat: 41.390205, lng: 2.154007 }
     map = new google.maps.Map(document.getElementById("map"), {
-        center: barcerlona,
+        center: barcelona,
         zoom: 14,
         // mapId: idDeEstilos
     })
 
     // console.log(hotels)
-    crateLocationMarkers()
+    createLocationMarkers()
     const marker = new google.maps.Marker({
-        position: barcerlona,
+        position: barcelona,
         map: map,
     })
     infoWindow = new google.maps.infoWindow();
