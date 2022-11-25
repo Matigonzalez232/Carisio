@@ -12,7 +12,7 @@ const setListener = () => {
 
     })
 }
-
+// llama al arreglo hotels, crea un h4 con el valor.name y desp localiza el div hotel__names e inserta el h4 creado 
 const displayHotelList = () => {
     let hotelHTML = "";
     hotels.forEach(hotel => {
@@ -52,8 +52,6 @@ const createMarker = (coord, name, address, phone) => {
     google.maps.event.addListener(marker, "click", () => {
         infoWindow.setContent(html);
         infoWindow.open(map, marker)
-
-
     })
     markers.push(marker)
 
