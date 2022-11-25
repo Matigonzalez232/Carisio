@@ -48,7 +48,7 @@ html, body{
     border-bottom:3px solid lightblue !important;
 }
 
-.address .phone {
+.address , .phone {
     display: flex;
     justify-content: flex-start;
     align-items:center;
