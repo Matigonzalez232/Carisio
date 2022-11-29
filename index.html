@@ -37,12 +37,19 @@
         </h3>
         <div class="hotel__names" id="hotel__names"></div>
     </div> -->
-
-
-
+  <a class="menu-bar" data-toggle="collapse" href="#menu">
+    <button class="boton-prueba btn"><i class="fas fa-bars"></i></button>
+  </a>
+  <div class="collapse menu" id="menu">
+    <ul class="list-inline">
+      <li><a onclick="cambiarCategoria( 'paradas')">PARADAS DE COLECTIVO</a></li>
+      <li><a onclick="cambiarCategoria( 'informacion')">INFORMACIÓN UTIL</a></li>
+      <li><a onclick="cambiarCategoria( 'luminarias')">ILUMINARIAS</a></li>
+      
+    </ul>
+  </div>
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="container">
         <div class="modal-content">
@@ -50,7 +57,7 @@
           <div class="modal-header">
             <div>
               <h3 id="modal-title"></h3>
-              <h5>subtitulo</h5>
+              <h5 id="modal-subtitle"></h5>
             </div>
 
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -1,18 +1,35 @@
 //la variable hotels esta definida en global scope por eso podemos acceder a ella desde cualquier parte
 let map;
 let markers = [];
-let seleccion="";
+let categoria = "";
 // const isVisible = "is-visible";
-const setListener = () => {
-    document.querySelectorAll(".hotel__individualNames").forEach((hotelName, index) => {
+// const setListener = () => {
+//     document.querySelectorAll(".hotel__individualNames").forEach((hotelName, index) => {
 
-        hotelName.addEventListener("click", () => {
+//         hotelName.addEventListener("click", () => {
 
-            google.map.event.trigger(markers[index], "click")
-        })
+//             google.map.event.trigger(markers[index], "click")
+//         })
 
 
-    })
+//     })
+// }
+function cambiarCategoria(opcion) {
+    categoria = opcion;
+    if (categoria == "") {
+        createLocationMarkers(listado.hotels);
+
+    } else if (categoria == "paradas") {
+        createLocationMarkers(listado.paradas);
+
+    } else if (categoria == "informacion") {
+        createLocationMarkers(listado.informacion);
+
+    } else if (categoria == "luminarias") {
+        createLocationMarkers(listado.luminarias);
+
+    }
+
 }
 // llama al arreglo hotels, crea un h4 con el valor.name y desp localiza el div hotel__names e inserta el h4 creado 
 // const displayHotelList = () => {
@@ -27,24 +44,22 @@ const setListener = () => {
 //     document.getElementById("hotel__names").innerHTML = hotelHTML;
 // }
 
-const createMarker = (coord, name, address, phone) => {
-    // let html =
-    //     `
-    // <div class="window">
-    //     <h2>${name}</h2>
-    //     <div class="address">
-    //     <i class="fas fa-map-marker-alt fa-lg" ></i>
-    //     <h3>${address}</h3>
-    //     </div>
-    //     <div class="phone">
-    //     <i class="fas fa-phone-alt fa-lg" ></i>
-    //     <h3>${phone}</h3>
-    //     </div>
-    
-    // </div>
-    
-    // `
-    
+const removeAllMarkers = () => {
+    markers.forEach((element,index) => {
+        markers[index].setMap(null);
+    })
+}
+
+const showModal = (marker_data) => {
+    document.getElementById("modal-title").textContent = marker_data.titulo;
+    document.getElementById("modal-subtitle").textContent = marker_data.subtitulo;
+    document.getElementById("modal-text").textContent = marker_data.texto;
+    $("#Modal").modal();
+}
+
+const createMarker = (marker_data) => {
+    let coord = new google.maps.LatLng(marker_data.lat, marker_data.lng);
+
     const marker = new google.maps.Marker(
         {
             position: coord,
@@ -53,32 +68,31 @@ const createMarker = (coord, name, address, phone) => {
         }
     )
     google.maps.event.addListener(marker, "click", () => {
-        $('#exampleModal').modal();
-        document.getElementById("modal-title").textContent = name;
-        document.getElementById("modal-text").textContent = address;
+        showModal(marker_data);
 
         // console.log("funciona")
-        // let modal =  document.getElementById("exampleModal")
+        // let modal =  document.getElementById("Modal")
         // modal.classList.add("show");
         // modal.style.display="block";
-        // document.getElementById("exampleModal").classList.add(isVisible);
+        // document.getElementById("Modal").classList.add(isVisible);
         // infoWindow.setContent(html);
         // infoWindow.open(map, marker)
     })
     markers.push(marker)
 
 }
-const createLocationMarkers = () => {
+const createLocationMarkers = (listado) => {
+    removeAllMarkers();
+    
     let bounds = new google.maps.LatLngBounds();
-    listado.hotels.forEach(hotel => {
-        let coord = new google.maps.LatLng(hotel.lat, hotel.lng);
-        let name = hotel.name;
-        let address = hotel.address;
-        let phone = hotel.phone;
+
+    listado.forEach(item => {
+        let coord = new google.maps.LatLng(item.lat, item.lng);
         bounds.extend(coord)
-        createMarker(coord, name, address, phone);
+        createMarker(item);
         map.fitBounds(bounds);
     })
+
 }
 
 function initMap() {
@@ -90,11 +104,11 @@ function initMap() {
     })
 
     // console.log(hotels)
-    createLocationMarkers()
-    const marker = new google.maps.Marker({
-        position: barcelona,
-        map: map,
-    })
+    createLocationMarkers(listado.hotels)
+    // const marker = new google.maps.Marker({
+    //     position: barcelona,
+    //     map: map,
+    // })
     // infoWindow = new google.maps.InfoWindow();
     // displayHotelList();
     setListener();
